@@ -5,9 +5,7 @@
 
 
 //*********************************************NRF24L01*************************************
-#define TX_ADR_WIDTH    5   	// 5 uints TX address width
-#define RX_ADR_WIDTH    5   	// 5 uints RX address width
-
+#define ADDR_WIDTH    5   	// 5 uints TX/RX address width
 #define RX_PLOAD_WIDTH  32  	// 32 uints TX payload
 #define TX_PLOAD_WIDTH  32  	// 32 uints TX payload
 //***************************************NRF24L01寄存器指令*******************************************************
@@ -79,7 +77,7 @@ extern uint8_t NRF24L01_TXDATA[32];
 extern u8 TxBuf[32];//外部声明发送数组
 extern u8 RxBuf[32];//外部声明接收数组
 
-extern u8 TX_ADDRESS[TX_ADR_WIDTH];
+extern u8 LOCAL_ADDRESS[];
 
 #endif
 

@@ -32,8 +32,8 @@ u8 RxBuf[32];//接收数组
 
 
 //修改该接收和发送地址，可以供多个飞行器在同一区域飞行，数据不受干扰
-u8  TX_ADDRESS[TX_ADR_WIDTH]= {0x34,0xc3,0x10,0x10,0x00};	//本地地址
-u8  RX_ADDRESS[RX_ADR_WIDTH]= {0x34,0xc3,0x10,0x10,0x11};	//接收地址	
+u8 LOCAL_ADDRESS[ADDR_WIDTH]  = {0x34,0xc3,0x10,0x10,0x00};	//本地地址
+u8 REMOTE_ADDRESS[ADDR_WIDTH] = {0x34,0xc3,0x10,0x10,0x11};	//接收地址	
 
 uint8_t NRF24L01_RXDATA[RX_PLOAD_WIDTH];//nrf24l01接收到的数据
 uint8_t NRF24L01_TXDATA[RX_PLOAD_WIDTH];//nrf24l01需要发送的数据
@@ -117,7 +117,7 @@ void SetRX_Mode(void)
 {
     SPI_CE_L();
 	  NRF_Write_Reg(FLUSH_RX,0xff);//清除TX FIFO寄存器			 
-  	NRF_Write_Buf(NRF_WRITE_REG+RX_ADDR_P0,(uint8_t*)RX_ADDRESS,RX_ADR_WIDTH);//写RX节点地址
+  	NRF_Write_Buf(NRF_WRITE_REG+RX_ADDR_P0,(uint8_t*)REMOTE_ADDRESS,ADDR_WIDTH);//写RX节点地址
    	NRF_Write_Reg(NRF_WRITE_REG+EN_AA,0x01);    //使能通道0的自动应答    
   	NRF_Write_Reg(NRF_WRITE_REG+EN_RXADDR,0x01);//使能通道0的接收地址  	 
   	NRF_Write_Reg(NRF_WRITE_REG+RF_CH,40);	     //设置RF通信频率		  
@@ -133,8 +133,8 @@ void SetTX_Mode(void)
 {
     SPI_CE_L();
     NRF_Write_Reg(FLUSH_TX,0xff);										//清除TX FIFO寄存器		  
-    NRF_Write_Buf(NRF_WRITE_REG+TX_ADDR,(u8*)TX_ADDRESS,TX_ADR_WIDTH);		//写TX节点地址 
-  	NRF_Write_Buf(NRF_WRITE_REG+RX_ADDR_P0,(u8*)RX_ADDRESS,RX_ADR_WIDTH); 	//设置TX节点地址,主要为了使能ACK	  
+    NRF_Write_Buf(NRF_WRITE_REG+TX_ADDR,(u8*)LOCAL_ADDRESS,ADDR_WIDTH);		//写TX节点地址 
+  	NRF_Write_Buf(NRF_WRITE_REG+RX_ADDR_P0,(u8*)LOCAL_ADDRESS,ADDR_WIDTH); 	//设置TX节点地址,主要为了使能ACK	  
   	NRF_Write_Reg(NRF_WRITE_REG+EN_AA,0x01);     //使能通道0的自动应答    
   	NRF_Write_Reg(NRF_WRITE_REG+EN_RXADDR,0x01); //使能通道0的接收地址  
   	NRF_Write_Reg(NRF_WRITE_REG+SETUP_RETR,0x1a);//设置自动重发间隔时间:500us + 86us;最大自动重发次数:10次
@@ -195,7 +195,7 @@ void NRF24L01_SetTxAddr(void)
 	unsigned time = micros();
 	
 	printf("time is 0x%x\r\n",time);
-	TX_ADDRESS[4] = (u8)time;
+	LOCAL_ADDRESS[4] = (u8)time;
 	
 	
 	//保存到EEPROM中
@@ -211,7 +211,7 @@ u8 NRF24L01_Check(void)
    u8 i=0; 
 	 
 	 //Set a rand TX address in init
-	 if(0x00 == TX_ADDRESS[4]){
+	 if(0x00 == LOCAL_ADDRESS[4]){
 		 NRF24L01_SetTxAddr();
 	 }
 	 

@@ -64,7 +64,7 @@ void TableToParam(void)
 	    Roll_Calibra = table.rollCalibraVaule;
 	    Yaw_Calibra = table.yawCalibraVaule;
 	    ClibraFlag  = table.Clibra_flag;
-			TX_ADDRESS[4] = (uint8_t)table.tx_addr;
+			LOCAL_ADDRESS[4] = (uint8_t)table.tx_addr;
 }
 
 void ParamToTable(void)
@@ -75,7 +75,7 @@ void ParamToTable(void)
 	table.rollCalibraVaule = Roll_Calibra;
 	table.yawCalibraVaule  = Yaw_Calibra;
 	table.Clibra_flag      = ClibraFlag;
-	table.tx_addr					 = (uint16_t)TX_ADDRESS[4];
+	table.tx_addr					 = (uint16_t)LOCAL_ADDRESS[4];
 
 }
 
@@ -112,5 +112,5 @@ void ParamSetDefault(void)
 	    Roll_Calibra 					= 0;
 	    Yaw_Calibra 					= 0;
 	    ClibraFlag            = FAIL;
-			TX_ADDRESS[4]					= 0x00;
+			LOCAL_ADDRESS[4]					= 0x00;
 }
