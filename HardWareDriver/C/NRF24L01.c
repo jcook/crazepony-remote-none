@@ -32,8 +32,8 @@ u8 RxBuf[32];//接收数组
 
 
 //修改该接收和发送地址，可以供多个飞行器在同一区域飞行，数据不受干扰
-u8 LOCAL_ADDRESS[ADDR_WIDTH]  = {0x34,0xc3,0x10,0x10,0x00};	//本地地址
-u8 REMOTE_ADDRESS[ADDR_WIDTH] = {0x34,0xc3,0x10,0x10,0x11};	//接收地址	
+u8 LOCAL_ADDRESS[ADDR_WIDTH]  = {0x34,0xc3,0x10,0x10,0x00};	// used in TX mode.
+u8 REMOTE_ADDRESS[ADDR_WIDTH] = {0x34,0xc3,0x10,0x10,0x11};	// used in RX mode.
 
 uint8_t NRF24L01_RXDATA[RX_PLOAD_WIDTH];//nrf24l01接收到的数据
 uint8_t NRF24L01_TXDATA[RX_PLOAD_WIDTH];//nrf24l01需要发送的数据
